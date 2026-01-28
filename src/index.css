@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* GoDelivery - Premium EV Scooty Rental - AutoEV Style */
+
+@layer base {
+  :root {
+    /* Sky Blue Theme */
+    --primary: 187 100% 42%; /* #00BCD4 Cyan */
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 187 100% 90%;
+    --primary-dark: 187 100% 35%;
+    
+    --accent: 187 100% 50%; /* Brighter cyan */
+    --accent-foreground: 0 0% 100%;
+    
+    --dark: 220 20% 10%; /* Almost black */
+    --navy: 220 30% 15%;
+    
+    /* Light Theme */
+    --background: 0 0% 100%;
+    --foreground: 220 20% 10%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 10%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 10%;
+    
+    --secondary: 220 10% 96%;
+    --secondary-foreground: 220 20% 10%;
+    
+    --muted: 220 10% 96%;
+    --muted-foreground: 220 10% 50%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 10% 90%;
+    --input: 220 10% 94%;
+    --ring: 187 100% 42%;
+    
+    --radius: 0.75rem;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
+    --shadow-glow: 0 0 60px rgba(0,188,212,0.3);
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 20% 10%;
+    --sidebar-primary: 187 100% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 10% 96%;
+    --sidebar-accent-foreground: 220 20% 10%;
+    --sidebar-border: 220 10% 90%;
+    --sidebar-ring: 187 100% 42%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Outfit', system-ui, sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', system-ui, sans-serif;
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Container with better alignment */
+  .container {
+    @apply w-full mx-auto;
+    max-width: min(1200px, calc(100% - 2rem));
+  }
+  
+  @media (min-width: 640px) {
+    .container {
+      max-width: min(1200px, calc(100% - 3rem));
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container {
+      max-width: min(1200px, calc(100% - 4rem));
+    }
+  }
+  
+  /* Geometric Background */
+  .bg-geometric {
+    background-color: #f8f9fa;
+    background-image: 
+      linear-gradient(135deg, #f0f2f5 25%, transparent 25%),
+      linear-gradient(225deg, #f0f2f5 25%, transparent 25%),
+      linear-gradient(45deg, #f0f2f5 25%, transparent 25%),
+      linear-gradient(315deg, #f0f2f5 25%, transparent 25%);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 0, 30px -30px, 0px 30px;
+  }
+  
+  /* Gradient Text */
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(187, 100%, 35%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Primary Button */
+  .btn-primary {
+    @apply relative px-5 py-3 md:px-7 md:py-3.5 rounded-full font-semibold text-white overflow-hidden transition-all duration-300 text-sm md:text-base;
+    background: hsl(var(--primary));
+  }
+  
+  .btn-primary:hover {
+    background: hsl(var(--primary-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+  }
+  
+  /* Outline Button */
+  .btn-outline-dark {
+    @apply px-5 py-3 md:px-7 md:py-3.5 rounded-full font-semibold border-2 border-foreground text-foreground transition-all duration-300 text-sm md:text-base;
+  }
+  
+  .btn-outline-dark:hover {
+    @apply bg-foreground text-background;
+  }
+  
+  /* Card */
+  .card-modern {
+    @apply bg-white rounded-2xl overflow-hidden transition-all duration-500;
+    box-shadow: var(--shadow-md);
+  }
+  
+  @media (min-width: 768px) {
+    .card-modern {
+      @apply rounded-3xl;
+    }
+  }
+  
+  @media (hover: hover) {
+    .card-modern:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+  }
+  
+  /* Marquee */
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+  }
+  
+  .marquee-content {
+    display: flex;
+    animation: marquee 30s linear infinite;
+  }
+  
+  .marquee-content:hover {
+    animation-play-state: paused;
+  }
+  
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  /* Float Animation */
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+  }
+  
+  /* Pulse Ring */
+  .pulse-ring {
+    animation: pulse-ring 2s ease-out infinite;
+  }
+  
+  @keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+  
+  /* Stats Counter */
+  .stat-number {
+    @apply text-4xl md:text-6xl font-black;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(187, 100%, 30%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Dark Section */
+  .section-dark {
+    @apply bg-foreground text-background;
+  }
+  
+  /* Spec Badge */
+  .spec-badge {
+    @apply inline-flex flex-col items-center justify-center p-3 md:p-4 rounded-xl md:rounded-2xl bg-secondary;
+  }
+  
+  /* Input Glass */
+  .input-glass {
+    @apply w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 text-sm md:text-base;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
