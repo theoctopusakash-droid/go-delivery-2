@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollDrawLine } from "@/components/ScrollDrawLine";
 import scootyImage from "@/assets/scooty-godelivery.jpg";
 import logoImage from "@/assets/logo-godelivery.png";
 import { Link } from "react-router-dom";
@@ -39,26 +40,19 @@ const testimonials = [
     rating: 5,
   },
 ];
-const scootyVariants = [{
-  name: "7 Battery Swaps",
-  range: "70 KM",
-  price: "1,299",
-  duration: "7 Days",
-  swaps: "7 Battery Swaps"
-}, {
-  name: "14 Battery Swaps",
-  range: "70 KM",
+const singlePlan = {
+  name: "Weekly Unlimited",
   price: "1,599",
   duration: "7 Days",
-  swaps: "14 Battery Swaps",
-  featured: true
-}, {
-  name: "18 Battery Swaps",
-  range: "70 KM",
-  price: "1,799",
-  duration: "7 Days",
-  swaps: "18 Battery Swaps"
-}];
+  swaps: "Unlimited Battery Swaps",
+  batteryType: "Sun Mobility",
+  features: [
+    "Unlimited Battery Swaps",
+    "24x7 Customer Support",
+    "RSA (Road Side Assistance)",
+    "Zero Maintenance Cost"
+  ]
+};
 const features = [{
   icon: Leaf,
   title: "Eco-Friendly",
@@ -140,7 +134,7 @@ export default function Index() {
               delay: 0.2
             }} className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 px-4">
                 Go-Delivery offers the best rental EV scooty in Delhi for delivery partners. 
-                Weekly plans starting ₹1,299. No license, no registration, no hassle!
+                Weekly plans starting ₹1,599. No license, no registration, no hassle!
               </motion.p>
               
               {/* CTAs */}
@@ -179,9 +173,17 @@ export default function Index() {
           </div>
         </section>
 
+        <ScrollDrawLine>
         {/* Variants Section */}
-        <section className="py-16 md:py-24 bg-background">
-          <div className="container px-4 md:px-6">
+        <motion.section 
+          data-scooty-title="Zero Emission" 
+          className="py-16 md:py-24 bg-background"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="container pl-4 pr-16 md:px-6">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -196,53 +198,98 @@ export default function Index() {
               </h2>
             </motion.div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
-              {scootyVariants.map((variant, i) => (
-                <motion.div 
-                  key={variant.name} 
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className={`card-modern p-6 md:p-8 ${variant.featured ? "ring-2 ring-primary sm:scale-105" : ""}`}
-                >
-                  {variant.featured && (
-                    <span className="inline-block px-3 py-1 rounded-full bg-primary text-white text-xs font-semibold mb-4">
-                      Most Popular
-                    </span>
-                  )}
-                  
-                  <div className="aspect-[4/3] bg-foreground rounded-2xl mb-5 md:mb-6 flex items-center justify-center overflow-hidden">
-                    <img alt={variant.name} className="w-full h-full object-cover" src="/gd-uploads/7b09f69d-7f6a-4409-bb3c-74ab8bde5a14.jpg" />
+            <div className="max-w-4xl mx-auto">
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="card-modern overflow-hidden ring-4 ring-primary shadow-2xl rounded-3xl bg-white flex flex-col md:flex-row relative"
+              >
+                {/* Most Popular Badge */}
+                <div className="absolute top-4 right-4 md:left-4 md:right-auto z-10">
+                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20">
+                    <Star className="w-4 h-4 fill-white" />
+                    Most Popular Plan
+                  </span>
+                </div>
+
+                {/* Image Section */}
+                <div className="md:w-1/2 relative bg-secondary min-h-[300px] md:min-h-[400px] overflow-hidden">
+                  <img 
+                    alt="Unlimited Weekly Plan" 
+                    className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
+                    src="/gd-uploads/7b09f69d-7f6a-4409-bb3c-74ab8bde5a14.jpg" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 md:p-8">
+                    <div className="text-white transform translate-y-0 transition-transform duration-500">
+                      <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold mb-3 border border-white/30">
+                        {singlePlan.batteryType} Battery
+                      </span>
+                      <h3 className="text-3xl md:text-4xl font-bold leading-tight mb-2">Ride Without<br/>Limits</h3>
+                      <p className="text-white/80 text-sm md:text-base font-medium">Perfect for full-time delivery partners</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Content Section */}
+                <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-between bg-white">
+                  <div>
+                    <div className="flex items-start justify-between mb-6">
+                      <div>
+                        <h3 className="text-2xl md:text-3xl font-black text-foreground mb-2">{singlePlan.name}</h3>
+                        <div className="flex items-center gap-2 text-primary font-bold bg-primary/10 w-fit px-3 py-1.5 rounded-lg">
+                          <Battery className="w-5 h-5" />
+                          {singlePlan.swaps}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4 mb-8">
+                      {singlePlan.features.map((feature, i) => (
+                        <div key={i} className="flex items-center gap-4">
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 shadow-sm">
+                            <Check className="w-5 h-5 text-primary" />
+                          </div>
+                          <span className="text-foreground font-semibold md:text-lg">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                   
-                  <div className="spec-badge mb-5 md:mb-6">
-                    <span className="text-xl md:text-2xl font-bold text-foreground">{variant.range}</span>
-                    <span className="text-xs text-muted-foreground">Range per Battery</span>
+                  <div className="pt-6 border-t border-border/60">
+                    <div className="flex items-end justify-between mb-6">
+                      <div>
+                        <p className="text-sm text-muted-foreground font-bold mb-1 uppercase tracking-wider">Plan Price</p>
+                        <p className="flex items-baseline gap-1.5">
+                          <span className="text-4xl md:text-5xl font-black text-gradient">₹{singlePlan.price}</span>
+                          <span className="text-muted-foreground font-bold text-lg">/ {singlePlan.duration}</span>
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <Link 
+                      to="/contact" 
+                      className="w-full py-4 rounded-xl font-bold text-lg text-center block transition-all bg-primary text-white hover:bg-primary-dark hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1"
+                    >
+                      Book Your Scooty Now
+                    </Link>
                   </div>
-                  
-                  <h3 className="text-lg md:text-xl font-bold text-foreground mb-1">{variant.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-3 md:mb-4">{variant.swaps} for {variant.duration}</p>
-                  <p className="text-muted-foreground mb-4 md:mb-6">
-                    <span className="text-2xl md:text-3xl font-bold text-gradient">₹{variant.price}</span>
-                    <span className="text-sm">/{variant.duration}</span>
-                  </p>
-                  
-                  <Link 
-                    to="/contact" 
-                    className={`w-full py-3 rounded-full font-semibold text-center block transition-all text-sm md:text-base ${variant.featured ? "bg-primary text-white hover:bg-primary-dark" : "bg-secondary text-foreground hover:bg-foreground hover:text-background"}`}
-                  >
-                    Book Now
-                  </Link>
-                </motion.div>
-              ))}
+                </div>
+              </motion.div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Features Section */}
-        <section className="py-16 md:py-24 bg-secondary">
-          <div className="container px-4 md:px-6">
+        <motion.section 
+          data-scooty-title="Why Choose Us" 
+          className="py-16 md:py-24 bg-secondary"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="container pl-16 pr-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <motion.div initial={{
               opacity: 0,
@@ -300,11 +347,18 @@ export default function Index() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Testimonials Section */}
-        <section className="py-16 md:py-24 bg-background">
-          <div className="container px-4 md:px-6">
+        <motion.section 
+          data-scooty-title="Testimonials" 
+          className="py-16 md:py-24 bg-background"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="container pl-4 pr-16 md:px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -333,11 +387,18 @@ export default function Index() {
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Stats Section */}
-        <section className="py-12 md:py-16 bg-secondary">
-          <div className="container px-4 md:px-6 max-w-4xl mx-auto">
+        <motion.section 
+          data-scooty-title="Our Impact" 
+          className="py-12 md:py-16 bg-secondary"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="container pl-4 pr-16 md:px-6 max-w-4xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
               {stats.map((stat, i) => (
                 <motion.div 
@@ -354,11 +415,18 @@ export default function Index() {
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Hub Locations Section */}
-        <section className="py-16 md:py-24 bg-secondary">
-          <div className="container px-4 md:px-6 max-w-6xl mx-auto">
+        <motion.section 
+          data-scooty-title="Hub Locations" 
+          className="py-16 md:py-24 bg-secondary"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="container pl-16 pr-4 md:px-6 max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -472,12 +540,19 @@ export default function Index() {
               </motion.div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-geometric relative overflow-hidden">
+        <motion.section 
+          data-scooty-title="Start Journey" 
+          className="py-16 md:py-24 bg-geometric relative overflow-hidden"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <div className="absolute top-10 right-10 w-72 md:w-96 h-72 md:h-96 bg-primary/10 rounded-full blur-3xl" />
-          <div className="container relative z-10 px-4 md:px-6">
+          <div className="container relative z-10 pl-16 pr-4 md:px-6">
             <motion.div initial={{
             opacity: 0,
             y: 30
@@ -507,7 +582,8 @@ export default function Index() {
               </div>
             </motion.div>
           </div>
-        </section>
+        </motion.section>
+        </ScrollDrawLine>
       </main>
 
       <Footer />
