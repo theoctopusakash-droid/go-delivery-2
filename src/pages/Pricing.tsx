@@ -1,35 +1,22 @@
 import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import scootyImage from "@/assets/scooty-godelivery.jpg";
 import { Link } from "react-router-dom";
-import { Check, Phone, Battery, Zap } from "lucide-react";
+import { Check, Phone, Battery, Zap, Star } from "lucide-react";
 
-const batteryPlans = [
-  {
-    name: "7 Battery Swaps",
-    price: "1,299",
-    duration: "7 Days",
-    swaps: 7,
-    features: ["70 KM Range", "GPS Tracking", "No License Required", "Free Maintenance", "Priority Support"],
-  },
-  {
-    name: "14 Battery Swaps",
-    price: "1,599",
-    duration: "7 Days",
-    swaps: 14,
-    featured: true,
-    badge: "Most Popular",
-    features: ["70 KM Range", "GPS Tracking", "No License Required", "Free Maintenance", "Priority Support"],
-  },
-  {
-    name: "18 Battery Swaps",
-    price: "1,799",
-    duration: "7 Days",
-    swaps: 18,
-    features: ["70 KM Range", "GPS Tracking", "No License Required", "Free Maintenance", "Priority Support"],
-  },
-];
+const singlePlan = {
+  name: "Weekly Unlimited",
+  price: "1,599",
+  duration: "7 Days",
+  swaps: "Unlimited Battery Swaps",
+  batteryType: "Sun Mobility",
+  features: [
+    "Unlimited Battery Swaps",
+    "24x7 Customer Support",
+    "RSA (Road Side Assistance)",
+    "Zero Maintenance Cost"
+  ]
+};
 
 export default function Pricing() {
   return (
@@ -40,7 +27,7 @@ export default function Pricing() {
         <div className="container px-4 md:px-6">
           {/* Hero */}
           <motion.div
-            className="text-center mb-12 md:mb-20"
+            className="text-center mb-12 md:mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
@@ -55,61 +42,85 @@ export default function Pricing() {
             </p>
           </motion.div>
 
-          {/* Plans */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto mb-12 md:mb-20">
-            {batteryPlans.map((plan, i) => (
-              <motion.div
-                key={plan.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className={`card-modern p-6 md:p-8 relative ${plan.featured ? "ring-2 ring-primary sm:scale-105" : ""}`}
-              >
-                {plan.badge && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-primary text-white text-xs font-semibold whitespace-nowrap">
-                    {plan.badge}
-                  </span>
-                )}
-                
-                <div className="aspect-[4/3] bg-foreground rounded-xl md:rounded-2xl mb-5 md:mb-6 flex items-center justify-center overflow-hidden">
-                  <img src={scootyImage} alt={plan.name} className="w-full h-full object-cover" />
+          {/* Single Plan */}
+          <div className="max-w-4xl mx-auto mb-16 md:mb-24">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="card-modern overflow-hidden ring-4 ring-primary shadow-2xl rounded-3xl bg-white flex flex-col md:flex-row relative"
+            >
+              {/* Most Popular Badge */}
+              <div className="absolute top-4 right-4 md:left-4 md:right-auto z-10">
+                <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20">
+                  <Star className="w-4 h-4 fill-white" />
+                  Most Popular Plan
+                </span>
+              </div>
+
+              {/* Image Section */}
+              <div className="md:w-1/2 relative bg-secondary min-h-[300px] md:min-h-[400px] overflow-hidden">
+                <img 
+                  alt="Unlimited Weekly Plan" 
+                  className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
+                  src="/gd-uploads/7b09f69d-7f6a-4409-bb3c-74ab8bde5a14.jpg" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 md:p-8">
+                  <div className="text-white transform translate-y-0 transition-transform duration-500">
+                    <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold mb-3 border border-white/30">
+                      {singlePlan.batteryType} Battery
+                    </span>
+                    <h3 className="text-3xl md:text-4xl font-bold leading-tight mb-2">Ride Without<br/>Limits</h3>
+                    <p className="text-white/80 text-sm md:text-base font-medium">Perfect for full-time delivery partners</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Content Section */}
+              <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-between bg-white">
+                <div>
+                  <div className="flex items-start justify-between mb-6">
+                    <div>
+                      <h3 className="text-2xl md:text-3xl font-black text-foreground mb-2">{singlePlan.name}</h3>
+                      <div className="flex items-center gap-2 text-primary font-bold bg-primary/10 w-fit px-3 py-1.5 rounded-lg">
+                        <Battery className="w-5 h-5" />
+                        {singlePlan.swaps}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4 mb-8">
+                    {singlePlan.features.map((feature, i) => (
+                      <div key={i} className="flex items-center gap-4">
+                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 shadow-sm">
+                          <Check className="w-5 h-5 text-primary" />
+                        </div>
+                        <span className="text-foreground font-semibold md:text-lg">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 
-                {/* Battery Swaps Indicator */}
-                <div className="flex items-center gap-2 mb-3 md:mb-4">
-                  <Battery className="h-4 md:h-5 w-4 md:w-5 text-primary" />
-                  <span className="font-semibold text-foreground text-sm md:text-base">{plan.swaps} Battery Swaps</span>
+                <div className="pt-6 border-t border-border/60">
+                  <div className="flex items-end justify-between mb-6">
+                    <div>
+                      <p className="text-sm text-muted-foreground font-bold mb-1 uppercase tracking-wider">Plan Price</p>
+                      <p className="flex items-baseline gap-1.5">
+                        <span className="text-4xl md:text-5xl font-black text-gradient">₹{singlePlan.price}</span>
+                        <span className="text-muted-foreground font-bold text-lg">/ {singlePlan.duration}</span>
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <Link 
+                    to="/contact" 
+                    className="w-full py-4 rounded-xl font-bold text-lg text-center block transition-all bg-primary text-white hover:bg-primary-dark hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1"
+                  >
+                    Book Your Scooty Now
+                  </Link>
                 </div>
-                
-                <h3 className="text-lg md:text-xl font-bold text-foreground mb-2">{plan.name}</h3>
-                <div className="mb-4 md:mb-6">
-                  <span className="text-sm text-muted-foreground">₹</span>
-                  <span className="text-4xl md:text-5xl font-black text-gradient">{plan.price}</span>
-                  <p className="text-xs md:text-sm text-muted-foreground">for {plan.duration}</p>
-                </div>
-                
-                <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2 md:gap-3 text-xs md:text-sm">
-                      <Check className="h-3.5 md:h-4 w-3.5 md:w-4 text-primary flex-shrink-0" />
-                      <span className="text-muted-foreground">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <Link 
-                  to="/contact" 
-                  className={`w-full py-3 rounded-full font-semibold text-center block transition-all text-sm md:text-base ${
-                    plan.featured 
-                      ? "bg-primary text-white hover:bg-primary-dark" 
-                      : "bg-secondary text-foreground hover:bg-foreground hover:text-background"
-                  }`}
-                >
-                  Book Now
-                </Link>
-              </motion.div>
-            ))}
+              </div>
+            </motion.div>
           </div>
 
           {/* Info Section */}
@@ -120,7 +131,7 @@ export default function Pricing() {
             className="bg-secondary rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-12 max-w-4xl mx-auto mb-12 md:mb-20"
           >
             <div className="flex items-start gap-4 mb-6">
-              <div className="w-10 md:w-12 h-10 md:h-12 rounded-xl md:rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+               <div className="w-10 md:w-12 h-10 md:h-12 rounded-xl md:rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                 <Zap className="h-5 md:h-6 w-5 md:w-6 text-primary" />
               </div>
               <div>
